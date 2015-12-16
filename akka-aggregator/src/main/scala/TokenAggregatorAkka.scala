@@ -1,6 +1,5 @@
 import java.io.{FileWriter, BufferedWriter}
 
-import _root_.TokenAggregatorBasic._
 import akka.actor.{ ActorRef, ActorSystem, Props, Actor, Inbox }
 import conf.args.JobArguments
 import scala.concurrent.Future
@@ -8,15 +7,17 @@ import scala.concurrent.duration._
 import scala.collection.immutable.HashMap
 import scala.util.{Failure, Success}
 
-case class ProcessFileFor(file: String, passTo: ActorRef, nextPassTo: ActorRef)
+case class ProcessFileFor(file: String, passTo: ActorRef, nextPassTo: ActorRef, header: Boolean = false)
 case class LineToProcess(line: String, passTo: ActorRef)
 case class GroupedTokens(tokens: HashMap[String, Int])
 case class DumpToFile(filename: String)
 
 class FileReader extends Actor {
   def receive = {
-    case ProcessFileFor(filename, sendTo, nextSendTo) =>
-      scala.io.Source.fromFile(filename).getLines.foreach(line => sendTo ! LineToProcess(line, nextSendTo))
+    case ProcessFileFor(filename, sendTo, nextSendTo, header) =>
+      scala.io.Source.fromFile(filename).getLines()
+        .drop(if (header) 1 else 0) //filter out header
+        .foreach(line => sendTo ! LineToProcess(line, nextSendTo))
   }
 }
 
@@ -85,7 +86,7 @@ object TokenAggregatorAkka extends App {
 
   val aggregator = system.actorOf(Props[TokenAggregator], "tokenaggregator")
 
-  filereader ! ProcessFileFor(inputArgs.input, tokenizer, aggregator)
+  filereader ! ProcessFileFor(inputArgs.input, tokenizer, aggregator, inputArgs.header)
 
   Thread.sleep(2000)
 

@@ -5,8 +5,16 @@ object SparkJobs {
   def AggregateTokensJob(inputArgs: JobArguments, sc: SparkContext): Unit = {
     val separator = " "
 
-    val tokens = sc
+    val lines = sc
       .textFile(inputArgs.input)
+
+    // skip header
+    val filteredLines = if (inputArgs.header) {
+      val head = lines.first()
+      lines.filter(line => line != head) // will skip any lines that are equal to header
+    } else lines
+
+    val tokens = filteredLines
       .flatMap(line => line.split(separator))
 
     val tokenCounts = tokens

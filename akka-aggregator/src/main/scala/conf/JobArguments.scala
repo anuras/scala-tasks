@@ -27,6 +27,4 @@ case class JobArguments (
 
   def parseArgs(args: List[String]) =
     updateArguments(this, args)
-
-  def isLocal = this.local
 }
