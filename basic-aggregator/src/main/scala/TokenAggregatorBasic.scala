@@ -1,4 +1,3 @@
-import java.io.{FileWriter, BufferedWriter}
 import conf.args.JobArguments
 import scala.collection.immutable.HashMap
 import TokenAggrHelpers._
