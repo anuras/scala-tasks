@@ -11,6 +11,7 @@ case class DumpToFile(filename: String)
 case object FileProcessed
 case object AllLinesProcessed
 case object OutputComplete
+case object AskForTokens
 
 class Conductor(outputfile: String) extends Actor {
 

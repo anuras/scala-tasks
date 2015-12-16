@@ -30,5 +30,6 @@ class TokenAggregator extends Actor {
       writeTokensToFile(filename)
       sender ! OutputComplete
     }
+    case AskForTokens => sender ! GroupedTokens(aggrTokens)
   }
 }
