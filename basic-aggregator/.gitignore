@@ -1,0 +1,5 @@
+.idea/
+/project/
+target/
+tokenoutputfile.txt
+src/main/scala/sandbox.sc
