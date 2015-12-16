@@ -2,9 +2,6 @@ import akka.actor.{PoisonPill, ActorRef, Props, Actor}
 import conf.args.JobArguments
 import scala.collection.immutable.HashMap
 
-/**
- * Created by A.Marcinkevicius on 12/15/2015.
- */
 case class Process(inputArgs: JobArguments)
 case class ProcessFileFor(file: String, passTo: ActorRef, nextPassTo: ActorRef, header: Boolean = false)
 case class LineToProcess(line: String, passTo: ActorRef)
@@ -22,7 +19,9 @@ class Conductor(outputfile: String) extends Actor {
   val aggregator = context.actorOf(Props[TokenAggregator], "tokenaggregator")
 
   def receive = {
+    //actors are chained with ProcessFileFor()
     case Process(inputArgs) => filereader ! ProcessFileFor(inputArgs.input, tokenizer, aggregator, inputArgs.header)
+    //checking for completion and shutting down actors in order
     case FileProcessed => {
       filereader ! PoisonPill
       tokenizer ! FileProcessed

@@ -7,6 +7,7 @@ object TokenAggregatorSpark {
     val inputArgs = new JobArguments().parseArgs(args.toList)
     val sparkConf = SparkJobConf.autoConfig(inputArgs)
     val sc = new SparkContext(sparkConf)
+    //main job
     SparkJobs.AggregateTokensJob(inputArgs, sc)
     sc.stop()
 

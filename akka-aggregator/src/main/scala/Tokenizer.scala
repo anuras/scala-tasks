@@ -3,12 +3,10 @@ import scala.collection.immutable.HashMap
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-/**
- * Created by A.Marcinkevicius on 12/15/2015.
- */
 class Tokenizer extends Actor {
   import context.dispatcher
 
+  //split lines by separator to Future[HashMap[String, Int]]
   def extractAndGroup(line: String): Future[HashMap[String, Int]] = {
     val separator = ","
     Future(

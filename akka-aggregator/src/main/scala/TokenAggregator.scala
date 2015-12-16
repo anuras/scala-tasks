@@ -2,12 +2,10 @@ import java.io.{FileWriter, BufferedWriter}
 import akka.actor.Actor
 import scala.collection.immutable.HashMap
 
-/**
- * Created by A.Marcinkevicius on 12/15/2015.
- */
 class TokenAggregator extends Actor {
   var aggrTokens: HashMap[String, Int] = HashMap.empty[String, Int]
 
+  //merge HashMaps
   def joinMaps(hm1: HashMap[String, Int], hm2: HashMap[String, Int]): HashMap[String, Int] = {
     hm1.merged(hm2){
       case ((key1, value1), (key2, value2)) => (key1, value1 + value2)
