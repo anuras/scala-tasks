@@ -8,11 +8,9 @@ object TokenAggregatorBasic extends App {
 
   //read lines from file
   val lines = scala.io.Source.fromFile(inputArgs.input).getLines()
-    .drop(if (inputArgs.header) 1 else 0) //filter out header
-  //fold on lines producing HashMaps
-  val tokenCounts = lines.foldLeft(HashMap.empty[String, Int]){
-    (tempMap, line) => extractPlusHashMap(line, tempMap)
-  }
+
+  //skip header and count tokens
+  val tokenCounts = countTokens(skipHeader(lines, inputArgs.header))
 
   writeTokensToFile(tokenCounts, inputArgs.output)
 }
