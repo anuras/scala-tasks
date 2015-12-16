@@ -1,6 +1,8 @@
 import java.io.{FileWriter, BufferedWriter}
 
+import _root_.TokenAggregatorBasic._
 import akka.actor.{ ActorRef, ActorSystem, Props, Actor, Inbox }
+import conf.args.JobArguments
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.collection.immutable.HashMap
@@ -71,6 +73,8 @@ class TokenAggregator extends Actor {
 
 object TokenAggregatorAkka extends App {
 
+  val inputArgs = new JobArguments().parseArgs(args.toList)
+
   // Create the 'helloakka' actor system
   val system = ActorSystem("tokenakka")
 
@@ -81,13 +85,10 @@ object TokenAggregatorAkka extends App {
 
   val aggregator = system.actorOf(Props[TokenAggregator], "tokenaggregator")
 
-  val inputfile = "tokenfile.txt"
-  val outputfile = "tokenoutputfile.txt"
-
-  filereader ! ProcessFileFor(inputfile, tokenizer, aggregator)
+  filereader ! ProcessFileFor(inputArgs.input, tokenizer, aggregator)
 
   Thread.sleep(2000)
 
-  aggregator ! DumpToFile(outputfile)
+  aggregator ! DumpToFile(inputArgs.output)
   system.terminate()
 }
