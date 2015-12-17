@@ -1,6 +1,11 @@
-import _root_.sbt.Keys._
+import sbtassembly.Plugin.AssemblyKeys._
+import sbtassembly.Plugin._
+
+assemblySettings
 
 name := "basic-aggregator"
+
+jarName in assembly := "basic-aggregator.jar"
 
 version := "1.0"
 
@@ -18,5 +23,7 @@ resolvers ++= Seq(
   "Twitter Maven" at "http://maven.twttr.com",
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 )
+
+test in assembly := {}
 
 scalacOptions in Test ++= Seq("-Yrangepos")

@@ -1,5 +1,6 @@
 .idea/
-/project/
+/project/target/
+/project/project/
 target/
 outputtokenfile.txt
 src/main/scala/sandbox.sc

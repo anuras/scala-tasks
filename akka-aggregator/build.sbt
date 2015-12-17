@@ -1,6 +1,11 @@
-import _root_.sbt.Keys._
+import sbtassembly.Plugin.AssemblyKeys._
+import sbtassembly.Plugin._
+
+assemblySettings
 
 name := "akka-aggregator"
+
+jarName in assembly := "akka-aggregator.jar"
 
 version := "1.0"
 
@@ -24,3 +29,5 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.12" % "test",
   "com.novocode" % "junit-interface" % "0.11" % "test"
 )
+
+test in assembly := {}
