@@ -14,7 +14,11 @@ scalaVersion := "2.11.7"
 scalacOptions := Seq("-deprecation", "-encoding", "utf8")
 
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "1.5.1" % "provided",
+//  "org.apache.spark" %% "spark-core" % "1.5.1",
+  "org.apache.spark" %% "spark-core" % "1.6.0" % "provided",
+  "org.apache.spark" %% "spark-sql" % "1.6.0" % "provided",
+//  "org.apache.spark" %% "spark-core" % "1.6.0",
+//  "org.apache.spark" %% "spark-sql" % "1.6.0",
   "org.specs2" %% "specs2" % "2.4.2" % "test",
   "com.github.scala-incubator.io" %% "scala-io-file"      % "0.4.3-1"
 )

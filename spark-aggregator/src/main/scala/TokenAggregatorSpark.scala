@@ -8,7 +8,8 @@ object TokenAggregatorSpark {
     val sparkConf = SparkJobConf.autoConfig(inputArgs)
     val sc = new SparkContext(sparkConf)
     //main job
-    SparkJobs.AggregateTokensJob(inputArgs, sc)
+    //SparkJobs.AggregateTokensJob(inputArgs, sc)
+    SparkJobs.ReadParquetJob(inputArgs, sc)
     sc.stop()
 
   }
